@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
+
+{
+
+	echo "<script> function gotoGoogle(){
+
+			window.location='http://google.fr';
+	}
+
+			
+
+	 gotoGoogle(); </script>";
+
+
+}
+
+
+?>
+
 <!doctype html>  
  <html lang="fr">  
  <head>   

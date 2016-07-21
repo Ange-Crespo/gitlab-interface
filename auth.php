@@ -11,13 +11,16 @@ if ($_REQUEST['reset']==true)
 	session_destroy();
 	session_start();	
 }
-
+//var_dump($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null);
 if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
 {	$_SESSION['cookie_set']=true;
 	$_SESSION['login'] = $_REQUEST['name'] ;
 
 	echo "<script>  
 
+	function reset_All(){
+		window.location='http://localhost/gitlab-interface/auth.php?reset=true';
+	}
 
 	function setCookie(cname, cvalue, exdays) 
 	{
@@ -40,6 +43,7 @@ if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
 	}
 	
 	var key=makeid();
+	setCookie('name',key,1);
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'auth2.php', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -48,25 +52,15 @@ if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
             if (xhr.readyState == 4 && xhr.status == 200) {
                 
             }
-        };
-      
-    
-	setCookie('name',key,1);
-	</script>";
-	
-}
-
-else{
-	
-	
-	
-	echo "<script>
-	function reset_All(){
-		window.location='http://localhost/gitlab-interface/auth.php?reset=true';
-	}
-
+        };	
 	window.location='http://localhost/gitlab-interface/index.php';
 	 </script>";	
+}
+
+else {
+
+	echo "<script> window.location='http://localhost/gitlab-interface/index.php';  </script>";
+
 }
 
 ?>
