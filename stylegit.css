@@ -11,6 +11,7 @@ html, body {
     
 }
 body {
+	
     min-height: 100%;
     font-family: "Open Sans Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
@@ -104,12 +105,11 @@ body {
 	}		
 .Foot{
 	
-	position : absolute;
-	bottom : 0px;
-    right: 15px;
-    padding:0px;
-    margin:0px;
-    z-index:3;
+	
+	height: 100px;
+    	padding:0px;
+    	margin:0px;
+    	z-index:3;
     
 	}
 .collon{

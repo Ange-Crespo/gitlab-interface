@@ -14,8 +14,9 @@ if ($_REQUEST['reset']==true)
 //var_dump($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null);
 if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
 {	$_SESSION['cookie_set']=true;
-	$_SESSION['login'] = $_REQUEST['name'] ;
-
+	
+	$_SESSION['name_user'] = $_REQUEST['name'] ;
+	
 	echo "<script>  
 
 	function reset_All(){
@@ -55,6 +56,7 @@ if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
         };	
 	window.location='http://localhost/gitlab-interface/index.php';
 	 </script>";	
+//var_dump($_SESSION['login']);
 }
 
 else {

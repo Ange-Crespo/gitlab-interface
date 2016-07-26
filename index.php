@@ -1,7 +1,9 @@
 <?php
 session_start();
+//var_dump($_SESSION["name_user"]);
+//var_dump($_SESSION['private_key']);
 
-if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
+if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 
 {
 
@@ -17,7 +19,7 @@ if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
 
 }
 
-
+//include ('dibi_connect.php');
 ?>
 
 <!doctype html>  
@@ -26,7 +28,13 @@ if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
  <meta charset="utf-8">  
  <title>Relever les bugs et améliorations</title>  
  <link href="http://fonts.googleapis.com/css?family=Open+Sans+Light' rel= 'stylesheet '  type= 'text/css '  ">  
- <script src="script.js"></script>  
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.css">
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+ 
  <link href="css/bootstrap.min.css" rel="stylesheet">  
  <link rel="stylesheet"  href="stylegit.css">  
  <!--[if lt IE 9]>  
@@ -34,7 +42,7 @@ if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>  
  <![endif]-->  
  </head>  
-	 <body>  
+	 <body onload="return loadTable('projects',0)">  
 	
 	  <div>  
 	
@@ -97,18 +105,12 @@ if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
 	 								 <h3 class="panel-title">Déclarer un bug</h3>  
 	
 	 							 </div>  
-	
-	 							 <div class="panel-body">  
-									<ul class="nav nav-pills nav-stacked ">  
-						 			 
-						 			 <li class="der"> <a class="der" href="#"> <img src="images/folder.png" height='28' width='28'> <span class="Projet">Projet 1</span></a> </li>  
-	
-	 								 <li class="der"> <a class="der" href="#"> <img src="images/folder.png" height='28' width='28'> <span class="Projet">Projet 2</span></a> </li>  
+								<div id="BTable">								
+									<table id="Table">
 									
-									</ul>
-								 </div>  
-	
-							 </div>  
+									</table>
+								</div>							 
+							</div>  
 	
 					</div>	
 				</div>
@@ -117,14 +119,23 @@ if ($_COOKIE["name"]!=$_SESSION['private_key'] && $_COOKIE["name"]!=Null )
 	
 		
 	
-				 Tous droits réservés à Picodev  
+				 Tous droits réservés à Picodev
 	
 	
 	
 		 </footer>  
-	
+	<!-- jQuery -->
+    	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+    	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+	<script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
+	<script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"> </script>
+	<script src="bower_components/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 		
-		
+	<script src="ajax.js"></script>  
 	 </body>  
 	
  </html>  
