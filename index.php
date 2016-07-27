@@ -76,6 +76,8 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 				 </div>  
 				
 				 <div class="headPanel">  
+
+					<button id="Bretour" style="display : 'none'" class=" retour btn btn-default " onclick="return1()"><span class="glyphicon glyphicon-circle-arrow-left"></span><a id="Cretour" style="text-decoration: none"> Retour</a></button>
 				
 				 </div>  
 				
@@ -87,7 +89,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	
 	 					 <ul class="nav nav-pills nav-stacked Pane ">  
 	
-	 						 <li class=""> <a class="Pane1" href="#"> <img src="fonts/glyphicons-361-bug.png" height= '15 ' width= '15 '> Déclaration de bug </a> </li>  
+	 						 <li class=""> <a class="Pane1" href="http://localhost/gitlab-interface/index.php"> <span class="glyphicon glyphicon-folder-close"></span> Mes Projets </a> </li>  
 	
 	 						 <li> <a href="#"> <span class="glyphicon glyphicon-book"></span> Amélioration</a> </li>  
 							<li><a class="btn btn-inverse" style="color : white;" href='http://127.0.0.1/pydio'>Retour pour l'échange de fichier</a></li>
@@ -102,7 +104,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	
 	 							 <div class="panel-heading">  
 	
-	 								 <h3 class="panel-title">Déclarer un bug</h3>  
+	 								 <h3 id="Titre" class="panel-title">Mes Projets</h3>  
 	
 	 							 </div>  
 								<div id="BTable">								

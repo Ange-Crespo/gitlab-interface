@@ -115,21 +115,11 @@ function Get_Project_List($token){
 }
 
 
+
 //$r=Get_Project_List($token);
 //var_dump($r);
 
-function disp_Projects($token) {
-	$r=Get_Project_List($token);
-	//var_dump($r);
-	echo 				"<div class='panel-body'>  
-						<ul class='nav nav-pills nav-stacked '>  ";
-	foreach ($r as $project){
 
-	echo 						"<li class='der' onclick='get' id='".$project['id']."'> <a class='der' href='#'> <img src='images/folder.png' height='28' width='28'> <span class='Projet'>".$project['name']."</span></a> </li>  ";			
-	}
-	echo "					</ul>
-					</div>";  
-}
 
 function Get_Project_Specific($token,$id){
 
@@ -137,6 +127,14 @@ function Get_Project_Specific($token,$id){
 	 $result=Get_something($url1,$token);
 	return $result;
 }
+
+function Get_Issue_Detail($token,$id_project,$iid_issue){
+
+	$url="projects/".$id_project."/issues?".$iid_issue;
+	$result=Get_something($url,$token);
+	return $result;
+}
+
 
 function array_unshift_assoc(&$arr, $key, $val)
 {
@@ -163,8 +161,15 @@ function send_Ajax_Json($method,$token){
 		$result_not_parsed=Get_Project_Specific($token,$_REQUEST['project_id']);
 	
 	}
+	
+	else if ($method=='issue'){
+
+		$result_not_parsed=Get_Issue_Detail($token,$_REQUEST['project_id'],$_REQUEST['issue_iid']);
+		//var_dump($token);
+	}
 		$result_php_Array = json_decode($result_not_parsed,true);
-		//var_dump($result_php_Array);
+		$result_php_Array=Update_all_Date($result_php_Array); // on passe du format d'horaire avec offset sur les zones internationnale à un format user friendly
+		//var_dump($result_php_Array[0]['created_at2']);
 		$add=["size"=>count($result_php_Array)];
 		$result_php_Array=$add+["list"=>$result_php_Array];
 		//var_dump($result_php_Array);
@@ -179,5 +184,63 @@ function send_Ajax_Json($method,$token){
 echo send_Ajax_Json($_REQUEST['method'],$token);
 //echo $test;
 
+function AffDate($date){
+ if(!ctype_digit($date))
+  $date = strtotime($date);
+  //var_dump($date);	
+ if(date('Ymd', $date) == date('Ymd')){
+  $diff = time()-$date;
+  if($diff < 60) /* moins de 60 secondes */
+   return 'Il y a '.$diff.' sec';
+  else if($diff < 3600) /* moins d'une heure */
+   return 'Il y a '.round($diff/60, 0).' min';
+  else if($diff < 10800) /* moins de 3 heures */
+   return 'Il y a '.round($diff/3600, 0).' heures';
+  else /*  plus de 3 heures ont affiche ajourd'hui à HH:MM:SS */
+   return 'Aujourd\'hui à '.date('H:i:s', $date);
+ }
+ else if(date('Ymd', $date) == date('Ymd', strtotime('- 1 DAY')))
+  return 'Hier à '.date('H:i:s', $date);
+ else if(date('Ymd', $date) == date('Ymd', strtotime('- 2 DAY')))
+  return 'Il y a 2 jours à '.date('H:i:s', $date);
+ else
+  return 'Le '.date('d/m/Y à H:i:s', $date);
+}
 
+function Update_all_Date($Array){
+
+	foreach ($Array as &$project) {
+
+		$project['created_at2']=AffDate($project['created_at']);
+		//var_dump($project['created_at']);
+		if($project['last_activity_at']){
+	
+			$project['last_activity_at2']=AffDate($project['last_activity_at']);
+		}
+
+		if($project['updated_at']){
+			$project['updated_at2']=AffDate($project['updated_at']);
+		}
+	
+	}
+	
+	return $Array;
+}
+
+////////////////////////////////////////////////////////////////////////////// INUTILE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+/*function disp_Projects($token) { //inutile ! O_O
+	$r=Get_Project_List($token);
+	//var_dump($r);
+	echo 				"<div class='panel-body'>  
+						<ul class='nav nav-pills nav-stacked '>  ";
+	foreach ($r as $project){
+
+	echo 						"<li class='der' onclick='get' id='".$project['id']."'> <a class='der' href='#'> <img src='images/folder.png' height='28' width='28'> <span class='Projet'>".$project['name']."</span></a> </li>  ";			
+	}
+	echo "					</ul>
+					</div>";  
+}*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
