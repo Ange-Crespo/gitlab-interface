@@ -5,11 +5,14 @@ var id_retour=0;
 
 
 function loadTable(method,id) {
+
 	var url_json;
 
 	var fields={field1:{locate:"",namee:"",visible:false}, field2:{locate:"",namee:"",visible:false}, field3:{locate:"",namee:"",visible:false}, field4:{locate:"",namee:"",visible:false},field5:{locate:"",namee:"",visible:false},field6:{locate:"",namee:"",visible:false},field7:{locate:"",namee:"",visible:false},field8:{locate:"",namee:"",visible:false}};
 	gestion_contenue_vue(method);
+
 	if (method=='projects'){
+
 		url_json='http://localhost/gitlab-interface/dibi_connect.php?method=projects';
 		
 		fields.field1.locate= "id" ;
@@ -78,7 +81,9 @@ function loadTable(method,id) {
 		
 		
 	}
+
 	console.log(url_json);
+
 	$('#Table').bootstrapTable(
 					{ 
 						url : url_json,
@@ -188,21 +193,34 @@ function loadTable(method,id) {
 };
 
 function loadForm(method,id_project,iid_issue) {
-
+	
+	gestion_contenue_vue(method);
 	url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_iid='+iid_issue;
 	console.log(url_json);
+	console.log("coco");
+	$("#Table").load('form.html', function( response, status, xhr ) {
+  		if ( status == "error" ) {
+   			var msg = "Sorry but there was an error: ";
+    			$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+ 		}
+	});
+	
+	
+
+
 };
 
 
 //fonction quand on clique sur une ligne qui retourne l'ID du project en console
 $("#BTable").on('click-row.bs.table', function (e, row, $element) {
+
 		console.log("On clique");
 		erase_DOM_part_and_edit("BTable");
 		if (row.iid){                                             //Si c'est une issue
 			
 			console.log("On fait le loadform");
 			console.log(Nom_issue);			
-			Nom_issue=row.name;
+			Nom_issue=row.title;
 			console.log(Nom_issue);
 			loadForm('issue',row.project_id,row.iid);
 			console.log(row);
@@ -217,6 +235,7 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 			console.log(Nom_du_projet);
 			loadTable('project',row.id);
 			console.log(row);
+			id_retour=row.id;
 		}		
     	});
 
@@ -226,8 +245,10 @@ function erase_DOM_part_and_edit(Select_ID){
  
 	// boucle tant qu'un enfant existe
 		while (element1.firstChild) {
+
    		// le supprime
    			element1.removeChild(element1.firstChild);
+		
 		}
 	var table = document.createElement('table');
 	table.id="Table";
@@ -243,8 +264,11 @@ function gestion_contenue_vue(method){
 			element1.innerHTML="Mes Projets";
 		
 			element2 = document.getElementById("Bretour");
-			element2.style.display="none";
+			element2.className="retour btn btn-default";
 			
+			element5 = document.getElementById("Bissue");
+			element5.className="retour btn btn-default btn-primary";
+
 
 		}
 
@@ -256,19 +280,37 @@ function gestion_contenue_vue(method){
 			element2 = document.getElementById("Bretour");
 			element2.style.display="inline-block";
 			element2.className="retour-visible btn btn-default";
-			method_retour="projects";
-
+			
 			element3 = document.getElementById("Cretour");
 			element3.innerHTML=" Autres Projets";
+
+			method_retour="projects";
 			
+			element5 = document.getElementById("Bissue");
+			element5.style.display="inline-block";
+			element5.className="issue-visible btn btn-default btn-primary";
+
+		}
+
+		if (method=='issue'){	
+	
+			element1 = document.getElementById("Titre");
+			element1.innerHTML="Projet : "+Nom_du_projet+" : "+Nom_issue;
+			
+			element2 = document.getElementById("Cretour");
+			element2.innerHTML=" Autres issues";
+
+			method_retour="project";
+		
 		}
 
 };
 
 function return1(){
 
-	
 	erase_DOM_part_and_edit("BTable");
 	loadTable(method_retour,id_retour);
 
 }
+
+

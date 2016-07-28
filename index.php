@@ -77,7 +77,8 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 				
 				 <div class="headPanel">  
 
-					<button id="Bretour" style="display : 'none'" class=" retour btn btn-default " onclick="return1()"><span class="glyphicon glyphicon-circle-arrow-left"></span><a id="Cretour" style="text-decoration: none"> Retour</a></button>
+					<button id="Bretour" style="display : 'none'" class=" retour btn btn-default " onclick="return1()"><span class="glyphicon glyphicon-arrow-left"></span><a id="Cretour" style="text-decoration: none"> Retour</a></button>
+					<button id="Bissue" href="#" class=" retour btn btn-default btn-info"><span class="glyphicon glyphicon-plus"></span> Ajouter une issue</button>
 				
 				 </div>  
 				
