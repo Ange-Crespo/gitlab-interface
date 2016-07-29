@@ -192,13 +192,16 @@ function loadTable(method,id) {
 					});
 };
 
-function loadForm(method,id_project,iid_issue) {
+function loadForm(method,id_project,id_issue) {
 	
 	gestion_contenue_vue(method);
-	url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_iid='+iid_issue;
+	url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+ 	$.getJSON( url_json, function( json ) {
+  		console.log(json);
+ 	});
 	console.log(url_json);
 	console.log("coco");
-	$("#Table").load('form.html', function( response, status, xhr ) {
+	$("#BTable").load('form.html', function( response, status, xhr ) {
   		if ( status == "error" ) {
    			var msg = "Sorry but there was an error: ";
     			$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
@@ -217,14 +220,14 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 		console.log("On clique");
 		erase_DOM_part_and_edit("BTable");
 		if (row.iid){                                             //Si c'est une issue
-			
+			erase_DOM("BTable");
 			console.log("On fait le loadform");
 			console.log(Nom_issue);			
 			Nom_issue=row.title;
 			console.log(Nom_issue);
-			loadForm('issue',row.project_id,row.iid);
+			loadForm('issue',row.project_id,row.id);
 			console.log(row);
-			
+		
 		}  
 
 		else {						     //si ce n'est pas une issue (avoir si on affine le truc)
@@ -239,8 +242,8 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 		}		
     	});
 
-function erase_DOM_part_and_edit(Select_ID){
-	
+function erase_DOM(Select_ID){
+
 	var element1 = document.getElementById(Select_ID);
  
 	// boucle tant qu'un enfant existe
@@ -250,9 +253,21 @@ function erase_DOM_part_and_edit(Select_ID){
    			element1.removeChild(element1.firstChild);
 		
 		}
+
+	return element1;
+
+}
+
+function DOM_edit(element1){
 	var table = document.createElement('table');
 	table.id="Table";
 	element1.appendChild(table);
+};
+function erase_DOM_part_and_edit(Select_ID){
+	
+	element1=erase_DOM(Select_ID);
+	DOM_edit(element1);
+
 };
 
 

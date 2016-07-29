@@ -211,7 +211,7 @@ a:active{
 	margin-left:10px;
 		
 }
-
+/*/////////////////////////////////////////// Style BOUTON ////////////////////////////////:/*/
 .btn {
 	border-color: #ccc;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -235,6 +235,90 @@ a:active{
 
 }
 
+.btn-state-open{
+
+
+
+}
+
+
+
+.btn-state-closed{
+
+
+
+}
+
+
+.btn-state-resolved{
+
+
+
+}
+
+
+
+.btn-state-wont{
+
+
+
+
+}
+
+.btn-state-invalid{
+
+
+
+
+}
+
+.btn-state-delivery{
+
+
+
+}
+
+.btn-state-paid{
+
+
+
+}
+
+.btn-module{
+
+
+
+
+}
+
+.btn-version-issue{
+
+
+}
+
+.btn-version-resolved{
+
+
+
+}
+
+.btn-edit{
+
+	float: right;
+	
+
+
+}
+
+/*/////////////////////////////////////////// Style BOUTON /////////////////////////////////*/
+
+
+/*/////////////////////////////////////////// Section Dynamique ///////////////////////////////*/
+
+
+
+	
+
 .retour {
 
 	margin-left : -10px;
@@ -256,3 +340,11 @@ a:active{
 	margin-top : 15px;
 	z-index: 1;
 }
+
+.Titre_issue{
+
+	display : inline-block ;
+	
+
+}
+/*/////////////////////////////////////////// Fin Section Dynamique ////////////////////////////*/

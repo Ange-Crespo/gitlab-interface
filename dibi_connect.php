@@ -128,9 +128,9 @@ function Get_Project_Specific($token,$id){
 	return $result;
 }
 
-function Get_Issue_Detail($token,$id_project,$iid_issue){
+function Get_Issue_Detail($token,$id_project,$id_issue){
 
-	$url="projects/".$id_project."/issues?".$iid_issue;
+	$url="projects/".$id_project."/issues/".$id_issue."/?";
 	$result=Get_something($url,$token);
 	return $result;
 }
@@ -145,39 +145,50 @@ function array_unshift_assoc(&$arr, $key, $val)
 }
 
 function send_Ajax_Json($method,$token){
-
-
-	if ($method=='projects'){
-
-		//return Get_Project_List($token);
-		$result_not_parsed=Get_Project_List($token);
-		//var_dump($result_not_parsed);
-		
-
-	}
-
-	else if ($method=='project'){
-
-		$result_not_parsed=Get_Project_Specific($token,$_REQUEST['project_id']);
 	
-	}
-	
-	else if ($method=='issue'){
+	if ($method=='issue'){
 
-		$result_not_parsed=Get_Issue_Detail($token,$_REQUEST['project_id'],$_REQUEST['issue_iid']);
+		$result_not_parsed=Get_Issue_Detail($token,$_REQUEST['project_id'],$_REQUEST['issue_id']);
 		//var_dump($token);
+		$result_php_Array = json_decode($result_not_parsed,true);
+		//var_dump($result_php_Array);
+		$result_php_Array['created_at2']=AffDate($result_php_Array['created_at']);
+		$result_php_Array['updated_at2']=AffDate($result_php_Array['updated_at']);
+		$result_php_Array=Update_labels($result_php_Array);
+		//var_dump($result_php_Array);
+	
 	}
+
+	else{ 
+
+		if ($method=='project'){
+
+			$result_not_parsed=Get_Project_Specific($token,$_REQUEST['project_id']);
+	
+		}
+
+		else if ($method=='projects'){
+
+			//return Get_Project_List($token);
+			$result_not_parsed=Get_Project_List($token);
+			//var_dump($result_not_parsed);
+		
+		}
+
 		$result_php_Array = json_decode($result_not_parsed,true);
 		$result_php_Array=Update_all_Date($result_php_Array); // on passe du format d'horaire avec offset sur les zones internationnale à un format user friendly
 		//var_dump($result_php_Array[0]['created_at2']);
+
 		$add=["size"=>count($result_php_Array)];
 		$result_php_Array=$add+["list"=>$result_php_Array];
-		//var_dump($result_php_Array);
-		$result_json=json_encode($result_php_Array);
-		//var_dump($result_json);		
-		return $result_json;
-	
+		
+	}
 
+	//var_dump($result_php_Array);
+	$result_json=json_encode($result_php_Array);
+	//var_dump($result_json);
+		
+	return $result_json;
 }
 
 //$test= '{"size":5,"list":[{"id":11, "name":"test"} ,{"id":12, "name":"test"},{"id":13, "name":"test"},{"id":14, "name":"test"},{"id":15, "name":"test"}]}';
@@ -185,26 +196,43 @@ echo send_Ajax_Json($_REQUEST['method'],$token);
 //echo $test;
 
 function AffDate($date){
- if(!ctype_digit($date))
-  $date = strtotime($date);
-  //var_dump($date);	
- if(date('Ymd', $date) == date('Ymd')){
-  $diff = time()-$date;
-  if($diff < 60) /* moins de 60 secondes */
-   return 'Il y a '.$diff.' sec';
-  else if($diff < 3600) /* moins d'une heure */
-   return 'Il y a '.round($diff/60, 0).' min';
-  else if($diff < 10800) /* moins de 3 heures */
-   return 'Il y a '.round($diff/3600, 0).' heures';
-  else /*  plus de 3 heures ont affiche ajourd'hui à HH:MM:SS */
-   return 'Aujourd\'hui à '.date('H:i:s', $date);
- }
- else if(date('Ymd', $date) == date('Ymd', strtotime('- 1 DAY')))
-  return 'Hier à '.date('H:i:s', $date);
- else if(date('Ymd', $date) == date('Ymd', strtotime('- 2 DAY')))
-  return 'Il y a 2 jours à '.date('H:i:s', $date);
- else
-  return 'Le '.date('d/m/Y à H:i:s', $date);
+ 	if(!ctype_digit($date))
+
+ 		 $date = strtotime($date);
+  		//var_dump($date);
+	
+ 		if(date('Ymd', $date) == date('Ymd')){
+
+ 			$diff = time()-$date;
+
+ 			if($diff < 60) /* moins de 60 secondes */
+
+  				return 'Il y a '.$diff.' sec';
+
+ 			else if($diff < 3600) /* moins d'une heure */
+
+  				return 'Il y a '.round($diff/60, 0).' min';
+
+  			else if($diff < 10800) /* moins de 3 heures */
+   				
+				return 'Il y a '.round($diff/3600, 0).' heures';
+	
+  			else /*  plus de 3 heures ont affiche ajourd'hui à HH:MM:SS */
+   				
+				return 'Aujourd\'hui à '.date('H:i:s', $date);
+ 		}
+
+ 		else if(date('Ymd', $date) == date('Ymd', strtotime('- 1 DAY')))
+
+  			return 'Hier à '.date('H:i:s', $date);
+
+ 		else if(date('Ymd', $date) == date('Ymd', strtotime('- 2 DAY')))
+
+			return 'Il y a 2 jours à '.date('H:i:s', $date);
+
+ 		else
+
+  			return 'Le '.date('d/m/Y à H:i:s', $date);
 }
 
 function Update_all_Date($Array){
@@ -212,19 +240,85 @@ function Update_all_Date($Array){
 	foreach ($Array as &$project) {
 
 		$project['created_at2']=AffDate($project['created_at']);
+
 		//var_dump($project['created_at']);
+
 		if($project['last_activity_at']){
 	
 			$project['last_activity_at2']=AffDate($project['last_activity_at']);
+
 		}
 
 		if($project['updated_at']){
+
 			$project['updated_at2']=AffDate($project['updated_at']);
+
 		}
 	
 	}
 	
 	return $Array;
+}
+
+function Update_labels($Array){ // FINIR CETTE MISSION
+	
+	$version_issue=array();
+	$version_resolved=array();
+	$tags=array();
+	$myspecs=["#vi","#vr"];
+	$done=false;
+	
+	foreach ($Array['labels'] as $label){
+	
+		$done=false;
+
+		foreach ($myspecs as $spec){
+
+			$pos= strpos($label, $spec);
+			//var_dump($spec);			
+			//var_dump($pos);
+			//var_dump($label);
+
+			if ($pos!==false && $done===false){
+
+				if (spec==="#vi"){
+					//var_dump("fu");	
+					array_push($version_issue, $label);
+					$done=true;
+				}
+
+				else if (spec==="#vr" && $done===false){
+					//var_dump("fur");
+					array_push($version_resolved, $label);
+					$done=true;
+				}			
+			}
+	
+		}
+		if ($done===false){
+
+				//var_dump("furer");
+				array_push($tags, $label);
+				$done=true;
+		}
+		
+	
+	}
+	
+	$Array["version_issue"]= $version_issue;
+	$Array["version_resolved"]= $version_resolved;
+	$Array["labels"]= $tags;
+	var_dump($Array);
+	return $Array;
+
+}
+
+function isVisible($Array){ //fonction à faire une de ces 4 pour rendre visible seulement les issue que l'on souhaite 
+
+// Utiliser labels : "#invisible","#visible"
+
+	return 0;
+
 }
 
 ////////////////////////////////////////////////////////////////////////////// INUTILE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
