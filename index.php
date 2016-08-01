@@ -101,7 +101,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	 				 </nav>  
 	 				
 					
-	 						 <div class="panel display: inline-block ">  
+	 						 <div class="panel" style="display: inline-block">  
 	
 	 							 <div class="panel-heading">  
 	

@@ -208,9 +208,6 @@ function loadForm(method,id_project,id_issue) {
  		}
 	});
 	
-	
-
-
 };
 
 
