@@ -242,14 +242,48 @@ a:active{
 
 }
 
+
+
 .btn-state-open{
 
+	background-color : #FFFFFF;
+	margin-bottom : 10%;
+	color : white;
+	font-weight : bold;
+	*background-color: #33CC00;
+	background-image: -ms-linear-gradient(top, #FFFFFF, #33CC00);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#33CC00));
+	background-image: -webkit-linear-gradient(top, #FFFFFF, #33CC00);
+	background-image: -o-linear-gradient(top, #FFFFFF, #33CC00);
+	background-image: -moz-linear-gradient(top, #FFFFFF, #33CC00);
+	background-image: linear-gradient(top, #FFFFFF, #33CC00);
+	background-repeat: repeat-x;
+	border-color: #222222 #222222 #000000;
+	border-radius: 20px;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#33CC00', endColorstr='#FF0000', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 
 
 }
 
+.btn-state-open:hover{
 
+	color : white;
 
+}
+
+.btn-state-open:active {
+
+	color:white;
+	background-color: #33CC00;	
+ }
+
+.btn-state-open:focus{
+
+	color : white;
+
+}
 .btn-state-closed{
 
 
@@ -299,7 +333,23 @@ a:active{
 }
 
 .btn-version-issue{
-
+	
+	font-weight : bold;
+	color : white;
+	background-color: #FFFFFF;
+	*background-color: #000000;
+	background-image: -ms-linear-gradient(top, #555555, #000000);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#555555), to(#000000));
+	background-image: -webkit-linear-gradient(top, #555555, #000000);
+	background-image: -o-linear-gradient(top, #555555, #000000);
+	background-image: -moz-linear-gradient(top, #555555, #000000);
+	background-image: linear-gradient(top, #555555, #000000);
+	background-repeat: repeat-x;
+	border-color: #222222 #222222 #000000;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#555555', endColorstr='#000000', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
 
 }
 
@@ -324,18 +374,36 @@ a:active{
 	font-weight : bold;
 	*background-color: #000000;
 	background-image: -ms-linear-gradient(top, #FFFFFF, #FF0000);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FFFFFF));
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#FF0000));
 	background-image: -webkit-linear-gradient(top, #FFFFFF, #FF0000);
 	background-image: -o-linear-gradient(top, #FFFFFF, #FF0000);
 	background-image: -moz-linear-gradient(top, #FFFFFF, #FF0000);
 	background-image: linear-gradient(top, #FFFFFF, #FF0000);
 	background-repeat: repeat-x;
-	border-color: #222222 #222222 #000000;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-color: #000000 #000000 #000000;
+	border : thin solid #000000;
+	
 	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#FF0000', GradientType=0);
 	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 	
 }
+.btn-bug:hover{
+
+	color : white;
+
+}
+
+.btn-bug:focus{
+
+	color : white;
+
+}
+
+.btn-bug:active {
+  	color:white;
+  	background-color: #FF0000;	
+}
+
 /*/////////////////////////////////////////// Style BOUTON /////////////////////////////////*/
 
 

@@ -105,7 +105,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	
 	 							 <div class="panel-heading">  
 	
-	 								 <h3 id="Titre" class="panel-title">Mes Projets</h3>  
+	 								 <h3 id="Titre" class="panel-title">Mes Projetgit s</h3>  
 	
 	 							 </div>  
 								<div id="BTable">								
