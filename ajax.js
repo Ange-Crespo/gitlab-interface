@@ -1,9 +1,10 @@
+//Variables globales
 var Nom_du_projet="";
 var Nom_issue="";
 var method_retour="";
 var id_retour=0;
 
-
+//Fonction qui charge les tableaux et qui se lance lorsqu'on charge la page avec la method "projects"
 function loadTable(method,id) {
 
 	var url_json;
@@ -84,6 +85,7 @@ function loadTable(method,id) {
 
 	console.log(url_json);
 
+	//utilisation de bootstrap table pour chager les tableaux
 	$('#Table').bootstrapTable(
 					{ 
 						url : url_json,
@@ -192,6 +194,7 @@ function loadTable(method,id) {
 					});
 };
 
+// Fonction qui charge les information pour les issues et rempli la page issus avec les bons boutons, les commentaires etc
 function loadForm(method,id_project,id_issue) {
 	
 	gestion_contenue_vue(method);
@@ -211,7 +214,7 @@ function loadForm(method,id_project,id_issue) {
 };
 
 
-//fonction quand on clique sur une ligne qui retourne l'ID du project en console
+//fonction quand on clique sur une ligne qui retourne l'ID du project ou de l'issue
 $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 
 		console.log("On clique");
@@ -239,6 +242,7 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 		}		
     	});
 
+// fonction qui efface tout les enfants d'un élément du DOM
 function erase_DOM(Select_ID){
 
 	var element1 = document.getElementById(Select_ID);
@@ -253,13 +257,18 @@ function erase_DOM(Select_ID){
 
 	return element1;
 
-}
+};
 
+//fonction qui permet d'ajouter un table avec l'id Table dans un élement
 function DOM_edit(element1){
+
 	var table = document.createElement('table');
 	table.id="Table";
 	element1.appendChild(table);
+
 };
+
+//fonction qui suprimme le contenu d'un élément du DOM et le remplasse par un table d'id Table
 function erase_DOM_part_and_edit(Select_ID){
 	
 	element1=erase_DOM(Select_ID);
@@ -267,7 +276,7 @@ function erase_DOM_part_and_edit(Select_ID){
 
 };
 
-
+//En fonction du moment où on se trouve, gestion de la vue sauf pour le form pour simplifier.
 function gestion_contenue_vue(method){
 		
 		if (method=='projects'){
@@ -318,6 +327,7 @@ function gestion_contenue_vue(method){
 
 };
 
+//Gestion du bouton retour
 function return1(){
 
 	erase_DOM_part_and_edit("BTable");
