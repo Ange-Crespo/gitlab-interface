@@ -265,7 +265,7 @@ function Update_labels($Array){ // FINIR CETTE MISSION
 	$version_issue=array();
 	$version_resolved=array();
 	$tags=array();
-	$myspecs=["#vi","#vr"];
+	$myspecs=["#vi","#vr","#s"];
 	$done=false;
 	
 	foreach ($Array['labels'] as $label){
@@ -275,40 +275,59 @@ function Update_labels($Array){ // FINIR CETTE MISSION
 		foreach ($myspecs as $spec){
 
 			$pos= strpos($label, $spec);
-			//var_dump($spec);			
-			//var_dump($pos);
-			//var_dump($label);
+			
 
 			if ($pos!==false && $done===false){
+			
+				if ($spec=="#vi"){
 
-				if (spec==="#vi"){
-					//var_dump("fu");	
+					
+					$label=substr($label, 4); 
 					array_push($version_issue, $label);
 					$done=true;
+			
 				}
 
-				else if (spec==="#vr" && $done===false){
-					//var_dump("fur");
+				else if ($spec=="#vr" && $done===false){
+
+					
+					$label=substr($label, 4); 
 					array_push($version_resolved, $label);
 					$done=true;
+
+				}
+				
+				else if ($spec=="#s" && $done===false){
+					
+					$state=substr($label, 3);
+					
+					$done=true;
+
 				}			
 			}
 	
 		}
 		if ($done===false){
 
-				//var_dump("furer");
+				$label=substr($label, 3); 
 				array_push($tags, $label);
 				$done=true;
+
 		}
 		
-	
 	}
 	
-	$Array["version_issue"]= $version_issue;
-	$Array["version_resolved"]= $version_resolved;
-	$Array["labels"]= $tags;
-	var_dump($Array);
+	$Array["version_issue"] = $version_issue;
+	$Array["version_resolved"] = $version_resolved;
+	$Array["labels"] = $tags;
+	
+	if ($state==null){
+		$Array["state2"]=$Array["state"];
+	}
+	else{
+		$Array["state2"] = $state;
+	}
+	//var_dump($Array);
 	return $Array;
 
 }

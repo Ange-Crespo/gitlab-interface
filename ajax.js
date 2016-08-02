@@ -196,23 +196,74 @@ function loadTable(method,id) {
 
 // Fonction qui charge les information pour les issues et rempli la page issus avec les bons boutons, les commentaires etc
 function loadForm(method,id_project,id_issue) {
-	
-	gestion_contenue_vue(method);
-	url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
- 	$.getJSON( url_json, function( json ) {
-  		console.log(json);
- 	});
-	console.log(url_json);
-	console.log("coco");
+
 	$("#BTable").load('form.html', function( response, status, xhr ) {
   		if ( status == "error" ) {
    			var msg = "Sorry but there was an error: ";
     			$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
  		}
 	});
-	
+
+	gestion_contenue_vue(method);
+	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+ 	$.getJSON( url_json, function( json ) {//on a le json du projet
+				
+		disp_button(json);
+		/*disp_title(json);
+		disp_description(json);
+		disp_commentaires(json);*/
+
+ 	});
+	 
 };
 
+function disp_button(json){
+
+	var Module=json.milestone.title;
+	var labels=json.labels;
+	var state =json.state2;
+	state=equi_state(state);
+	labels.forEach(function(label) {
+
+    		console.log(label);
+	
+	});
+
+	var version_issue=json.version_issue[0];
+	var version_resolved=json.version_resolved[0];
+
+	console.log(Module);
+	console.log(version_issue);
+	console.log(version_resolved);
+
+	var buttonModule = document.getElementById('module');
+	var buttonVersion_issue=document.getElementById('version_detect');
+	var buttonVersion_resolved=document.getElementById('version_correct');
+	var buttonState=document.getElementById('state');
+
+	buttonModule.innerHTML=Module;
+	buttonVersion_issue.innerHTML=version_issue;
+	buttonVersion_resolved.innerHTML=version_resolved;
+	buttonState_resolved.innerHTML=state;
+	
+	console.log(buttonModule);
+	console.log(buttonVersion_issue);
+	console.log(buttonVersion_resolved);
+
+	return true;
+
+};
+
+function equi_state(state){
+
+	var struc={
+    			opened: 'Open',
+    			closed: 'Close',
+	};
+
+
+	return state;
+}
 
 //fonction quand on clique sur une ligne qui retourne l'ID du project ou de l'issue
 $("#BTable").on('click-row.bs.table', function (e, row, $element) {
@@ -222,7 +273,7 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 		if (row.iid){                                             //Si c'est une issue
 			erase_DOM("BTable");
 			console.log("On fait le loadform");
-			console.log(Nom_issue);			
+			console.log(Nom_issue);
 			Nom_issue=row.title;
 			console.log(Nom_issue);
 			loadForm('issue',row.project_id,row.id);
