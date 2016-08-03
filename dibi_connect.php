@@ -278,7 +278,7 @@ function Update_labels($Array){ // FINIR CETTE MISSION
 	$version_issue=array();
 	$version_resolved=array();
 	$tags=array();
-	$myspecs=["#vi","#vr","#s"];
+	$myspecs=["#vi","#vr","#t","#s"];
 	$done=false;
 	
 	foreach ($Array['labels'] as $label){
@@ -309,6 +309,13 @@ function Update_labels($Array){ // FINIR CETTE MISSION
 					$done=true;
 
 				}
+
+				else if ($spec=="#t" && $done===false){
+					
+					$type=substr($label, 3);
+					$done=true;
+
+				}
 				
 				else if ($spec=="#s" && $done===false){
 					
@@ -332,13 +339,32 @@ function Update_labels($Array){ // FINIR CETTE MISSION
 	
 	$Array["version_issue"] = $version_issue;
 	$Array["version_resolved"] = $version_resolved;
+
 	$Array["labels"] = $tags;
 	
-	if ($state==null){
-		$Array["state2"]=$Array["state"];
+	if ($type==null){
+
+		$Array["type2"]="bug";
+	
 	}
+
 	else{
+
+		$Array["type2"] = $type;
+
+	}
+
+
+	if ($state==null){
+
+		$Array["state2"]=$Array["state"];
+
+	}
+
+	else{
+
 		$Array["state2"] = $state;
+
 	}
 	//var_dump($Array);
 	return $Array;

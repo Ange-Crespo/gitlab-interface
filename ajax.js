@@ -3,6 +3,8 @@ var Nom_du_projet="";
 var Nom_issue="";
 var method_retour="";
 var id_retour=0;
+var id_projet_mem;
+var id_issue_mem;
 
 //Fonction qui charge les tableaux et qui se lance lorsqu'on charge la page avec la method "projects"
 function loadTable(method,id) {
@@ -46,6 +48,8 @@ function loadTable(method,id) {
 	if (method=='project'){
 		
 		url_json='http://localhost/gitlab-interface/dibi_connect.php?method=project&project_id='+id;
+		
+		id_projet_mem=id;
 
 		fields.field1.locate= "iid" ;
 		fields.field1.namee= "#" ; 
@@ -195,9 +199,9 @@ function loadTable(method,id) {
 };
 
 // Fonction qui charge les information pour les issues et rempli la page issus avec les bons boutons, les commentaires etc
-function loadForm(method,id_project,id_issue) {
+function loadIssue(method,id_project,id_issue) {
 
-	$("#BTable").load('form.html', function( response, status, xhr ) {
+	$("#BTable").load('IssueView.html', function( response, status, xhr ) {
   		if ( status == "error" ) {
    			var msg = "Sorry but there was an error: ";
     			$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
@@ -207,7 +211,7 @@ function loadForm(method,id_project,id_issue) {
 	gestion_contenue_vue(method);
 	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
 	var url_json_notes='http://localhost/gitlab-interface/dibi_connect.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
-	
+	id_issue_mem=id_issue;
 	console.log(url_json);
 	console.log(url_json_notes);
  	$.getJSON( url_json, function( json ) {//on a le json du projet
@@ -328,7 +332,7 @@ function disp_commentaires(json){
 		if (coms[i].author.name!="Administrator"){
 			tr=document.createElement('tr');
 			j=j+1;
-			tr.id="Commentaire-"+j;
+			tr.id=coms[i].id;;
 			
 			td=document.createElement('td');
 
@@ -392,6 +396,51 @@ function disp_commentaires(json){
 	}
 
 }
+
+function loadEdit(id_project,id_issue){
+
+	console.log(id_project);
+	console.log(id_issue);
+
+	$("#BTable").load('edit.php', function( response, status, xhr ) {
+  		if ( status == "error" ) {
+   			var msg = "Sorry but there was an error: ";
+    			$( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+ 		}
+	});
+
+	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+
+	$.getJSON( url_json, function( json ) {//on a le json de l'issue
+			
+		document.getElementById("Title").value=json.title;
+		document.getElementById("description_Edit").value=json.description;
+		document.getElementById("assignee").value=json.assignee.name;
+		document.getElementById("module").value=json.milestone.title;
+		document.getElementById("version_detectee").value=json.version_issue[0];
+		document.getElementById("version_resolue").value=json.version_resolved[0];
+		document.getElementById("module").value=json.milestone.title;
+		document.getElementById("module").value=json.milestone.title;
+		document.getElementById("type").value=equi_type(json.type2);
+
+ 	});
+	
+}
+
+function equi_type(type){
+
+	var struc={
+
+    			bug: 'Bug/Issue',
+			amelioration: 'Amélioration',
+			
+	};
+
+	type=struc[type];
+	return type;
+
+}
+
 //fonction quand on clique sur une ligne qui retourne l'ID du project ou de l'issue
 $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 
@@ -399,11 +448,11 @@ $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 		erase_DOM_part_and_edit("BTable");
 		if (row.iid){                                             //Si c'est une issue
 			erase_DOM("BTable");
-			console.log("On fait le loadform");
+			console.log("On fait le loadIssue");
 			console.log(Nom_issue);
 			Nom_issue=row.title;
 			console.log(Nom_issue);
-			loadForm('issue',row.project_id,row.id);
+			loadIssue('issue',row.project_id,row.id);
 			console.log(row);
 		
 		}  
@@ -454,7 +503,7 @@ function erase_DOM_part_and_edit(Select_ID){
 
 };
 
-//En fonction du moment où on se trouve, gestion de la vue sauf pour le form pour simplifier.
+//En fonction du moment où on se trouve, gestion de la vue sauf pour le Issue pour simplifier.
 function gestion_contenue_vue(method){
 		
 		if (method=='projects'){

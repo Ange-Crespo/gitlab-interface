@@ -796,6 +796,13 @@ a:active{
 	width : 39%;
 
 }
+
+#description_Edit{
+
+	width : 100%;
+	min-height: 13em;
+
+}
 /*/////////////////////////////////////////// Fin Section Dynamique ////////////////////////////*/
 
 
