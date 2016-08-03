@@ -135,6 +135,13 @@ function Get_Issue_Detail($token,$id_project,$id_issue){
 	return $result;
 }
 
+function Get_notes($token,$id_project,$id_issue){
+
+	$url="projects/".$id_project."/issues/".$id_issue."/notes?";
+	$result=Get_something($url,$token);
+	return $result;
+
+}
 
 function array_unshift_assoc(&$arr, $key, $val)
 {
@@ -173,6 +180,12 @@ function send_Ajax_Json($method,$token){
 			$result_not_parsed=Get_Project_List($token);
 			//var_dump($result_not_parsed);
 		
+		}
+	
+		else if ($method=='notes'){
+
+			$result_not_parsed=Get_notes($token,$_REQUEST['project_id'],$_REQUEST['issue_id']);
+
 		}
 
 		$result_php_Array = json_decode($result_not_parsed,true);

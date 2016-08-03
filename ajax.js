@@ -206,22 +206,33 @@ function loadForm(method,id_project,id_issue) {
 
 	gestion_contenue_vue(method);
 	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json_notes='http://localhost/gitlab-interface/dibi_connect.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
+	
+	console.log(url_json);
+	console.log(url_json_notes);
  	$.getJSON( url_json, function( json ) {//on a le json du projet
 				
 		disp_button(json);
-		/*disp_title(json);
+		disp_title(json);
 		disp_description(json);
-		disp_commentaires(json);*/
+		disp_commentaires(json);
 
  	});
-	 
+
+	$.getJSON( url_json_notes, function( json_notes ) {//on a le json du projet
+				
+		
+		disp_commentaires(json_notes);
+
+ 	}); 
 };
 
 function disp_button(json){
 
-	var Module=json.milestone.title;
-	var labels=json.labels;
-	var state =json.state2;
+	var Module = json.milestone.title;
+	var labels = json.labels;
+	var state = json.state2;
+	var class_state = 'btn dropdown-toggle btn-state-'+state;
 	state=equi_state(state);
 	labels.forEach(function(label) {
 
@@ -244,7 +255,8 @@ function disp_button(json){
 	buttonModule.innerHTML=Module;
 	buttonVersion_issue.innerHTML=version_issue;
 	buttonVersion_resolved.innerHTML=version_resolved;
-	buttonState_resolved.innerHTML=state;
+	buttonState.innerHTML=state;
+	buttonState.className=class_state;
 	
 	console.log(buttonModule);
 	console.log(buttonVersion_issue);
@@ -257,14 +269,129 @@ function disp_button(json){
 function equi_state(state){
 
 	var struc={
+
     			opened: 'Open',
+			reopened: 'Reopen',
+			resolved: 'Resolved',
     			closed: 'Close',
+			paid : 'Paid',
+			delivered : 'Delivered',
+			wont: "Won't fix",
+			invalid: 'Invalid',
+			
 	};
 
-
+	state=struc[state];
 	return state;
+
 }
 
+function disp_title(json){
+
+	var Titre_issue=json.title;
+	var Num_issue=json.iid;
+	var Author=json.author.name;
+	var Date_issue=json.created_at2;
+
+	var Z_Num_issue=document.getElementById('number');
+	var Z_Titre_issue=document.getElementById('name');
+	var Z_Author=document.getElementById('author');
+	var Z_Date_issue=document.getElementById('time');
+
+	Z_Num_issue.innerHTML="#"+Num_issue;
+	Z_Titre_issue.innerHTML="&nbsp"+Titre_issue+"&nbsp";
+	Z_Author.innerHTML="by&nbsp" +Author+",&nbsp";
+	Z_Date_issue.innerHTML=Date_issue;
+
+}
+
+function disp_description(json){
+
+	var description=json.description;
+	
+	
+	var Z_Description=document.getElementById('description');
+
+	Z_Description.innerHTML=description;
+
+}
+
+function disp_commentaires(json){
+
+	var j=1;
+	var Cvide=true;
+	var coms=json.list;
+	console.log(coms);
+	var Table=document.getElementById('Com-body');
+	for (var i = 0, c = coms.length; i < c; i++){
+	
+		if (coms[i].author.name!="Administrator"){
+			tr=document.createElement('tr');
+			j=j+1;
+			tr.id="Commentaire-"+j;
+			
+			td=document.createElement('td');
+
+			h4=document.createElement('h4');
+			h4.className="Titre_issue";
+
+			h5=document.createElement('h5');
+			h5.className="Titre_issue";
+
+			p=document.createElement('p');
+		
+			console.log(coms[i]);
+			p.innerHTML=coms[i].body;
+			h4.innerHTML=coms[i].author.name+" ";
+			h5.innerHTML="&nbsp(&nbsp"+coms[i].created_at2+"&nbsp)";
+
+			// On met tout ensemble
+
+			td.appendChild(h4);
+			td.appendChild(h5);
+			td.appendChild(p);
+
+			tr.appendChild(td);
+
+			Table.appendChild(tr);
+			Cvide=false;
+		}
+		
+		if (Cvide){
+			tr=document.createElement('tr');
+			j=j+1;
+			tr.id="Commentaire-"+j;
+			
+			td=document.createElement('td');
+
+			h4=document.createElement('h4');
+			h4.className="Titre_issue";
+
+			h5=document.createElement('h5');
+			h5.className="Titre_issue";
+
+			p=document.createElement('p');
+		
+			console.log(coms[i]);
+			p.innerHTML="Il n'y a pas encore de commentaire";
+			h4.innerHTML="Soyez le premier à commenter";
+			h5.innerHTML="(maintenant)";
+
+			// On met tout ensemble
+
+			td.appendChild(h4);
+			td.appendChild(h5);
+			td.appendChild(p);
+
+			tr.appendChild(td);
+
+			Table.appendChild(tr);
+			Cvide=false;
+			
+		}
+	}
+
+}
 //fonction quand on clique sur une ligne qui retourne l'ID du project ou de l'issue
 $("#BTable").on('click-row.bs.table', function (e, row, $element) {
 

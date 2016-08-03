@@ -259,7 +259,8 @@ a:active{
 	margin-right : 0.5em;
 
 }
-.btn-state-open{
+
+.btn-state-opened{
 
 	background-color : #94E1FF;
 	
@@ -282,23 +283,65 @@ a:active{
 
 }
 
-.btn-state-open:hover{
+.btn-state-opened:hover{
 
 	color : white;
 
 }
 
-.btn-state-open:active {
+.btn-state-opened:active {
 
 	color:white;
 	background-color: #00719E;	
  }
 
-.btn-state-open:focus{
+.btn-state-opened:focus{
 
 	color : white;
 
 }
+
+.btn-state-reopened{
+
+	background-color : #94E1FF;
+	
+	color : white;
+	font-weight : bold;
+	*background-color: #94E1FF;
+	background-image: -ms-linear-gradient(top, #94E1FF,#00719E);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#94E1FF), to(#00719E));
+	background-image: -webkit-linear-gradient(top, #94E1FF, #00719E);
+	background-image: -o-linear-gradient(top, #94E1FF,#00719E);
+	background-image: -moz-linear-gradient(top, #94E1FF, #00719E);
+	background-image: linear-gradient(top,#94E1FF, #33CC00);
+	background-repeat: repeat-x;
+	border-color: #222222 #222222 #000000;
+	border-radius: 20px;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#94E1FF', endColorstr='#00719E', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+
+
+}
+
+.btn-state-reopened:hover{
+
+	color : white;
+
+}
+
+.btn-state-reopened:active {
+
+	color:white;
+	background-color: #00719E;	
+ }
+
+.btn-state-reopened:focus{
+
+	color : white;
+
+}
+
 .btn-state-closed{
 
 	font-weight : bold;
@@ -455,7 +498,7 @@ a:active{
   	background-color: #AA00FF;	
 }
 
-.btn-state-delivery{
+.btn-state-delivered{
 
 	color:white;
 	font-weight : bold;
@@ -476,19 +519,19 @@ a:active{
 
 }
 
-.btn-state-delivery:hover{
+.btn-state-delivered:hover{
 
 	color : white;
 
 }
 
-.btn-state-delivery:focus{
+.btn-state-delivered:focus{
 
 	color : white;
 
 }
 
-.btn-state-delivery:active {
+.btn-state-delivered:active {
   	color:white;
   	background-color: #00ADA5;	
 }
