@@ -16,7 +16,7 @@ function loadTable(method,id) {
 
 	if (method=='projects'){
 
-		url_json='http://localhost/gitlab-interface/dibi_connect.php?method=projects';
+		url_json='http://localhost/gitlab-interface/get.php?method=projects';
 		
 		fields.field1.locate= "id" ;
 		fields.field1.namee= "Project ID" ; 
@@ -47,7 +47,7 @@ function loadTable(method,id) {
 	
 	if (method=='project'){
 		
-		url_json='http://localhost/gitlab-interface/dibi_connect.php?method=project&project_id='+id;
+		url_json='http://localhost/gitlab-interface/get.php?method=project&project_id='+id;
 		
 		id_projet_mem=id;
 
@@ -209,8 +209,8 @@ function loadIssue(method,id_project,id_issue) {
 	});
 
 	gestion_contenue_vue(method);
-	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
-	var url_json_notes='http://localhost/gitlab-interface/dibi_connect.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json='http://localhost/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json_notes='http://localhost/gitlab-interface/get.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
 	id_issue_mem=id_issue;
 	console.log(url_json);
 	console.log(url_json_notes);
@@ -409,31 +409,33 @@ function loadEdit(id_project,id_issue){
  		}
 	});
 
-	var url_json='http://localhost/gitlab-interface/dibi_connect.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json='http://localhost/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
 
 	$.getJSON( url_json, function( json ) {//on a le json de l'issue
 			
 		document.getElementById("Title").value=json.title;
 		document.getElementById("description_Edit").value=json.description;
-		document.getElementById("assignee").value=json.assignee.name;
+		selected=json.assignee.name;
 		
-		usersDOM=document.getElementById("users")
+		usersDOM=document.getElementById("user")
 		
-		ListSmth(usersDOM,id_project,"members");
+		ListSmth(usersDOM,id_project,"members",selected);
 
 	
-		document.getElementById("module").value=json.milestone.title;
+		selected2=json.milestone.title;
 
-		modulesDOM=document.getElementById("modules");
+		modulesDOM=document.getElementById("module");
 			
-		ListSmth(modulesDOM,id_project,"modules");
+		ListSmth(modulesDOM,id_project,"modules",selected2);
 		
 		
 		document.getElementById("version_detectee").value=json.version_issue[0];
 		document.getElementById("version_resolue").value=json.version_resolved[0];
 		document.getElementById("module").value=json.milestone.title;
 		document.getElementById("module").value=json.milestone.title;
+		
 		document.getElementById("type").value=equi_type(json.type2);
+		document.getElementById("type").innerHTML=json.type2;
 		
  	});
 	
@@ -453,7 +455,7 @@ function equi_type(type){
 
 }
 
-function ListSmth(partDOM,id_project,method){
+function ListSmth(partDOM,id_project,method,selected){
 
 		var ask;
 
@@ -469,21 +471,26 @@ function ListSmth(partDOM,id_project,method){
 
 	}
 
-	url_json='http://localhost/gitlab-interface/dibi_connect.php?method='+method+'&project_id='+id_project;
+	url_json='http://localhost/gitlab-interface/get.php?method='+method+'&project_id='+id_project;
 	
 	$.getJSON( url_json, function( json ) {
 	
 		for (var i=0; i<json.size; i++){
 			
 			option=document.createElement("option");
-			option.id=json.list[i].id;
+			option.value=json.list[i].id;
 			option.innerHTML=json.list[i][ask];
+			if (selected==json.list[i][ask]){
+
+				option.selected=true;
+			
+			}
 			partDOM.appendChild(option);
 
 		}
 	
 	});
-
+	
 }
 
 //fonction quand on clique sur une ligne qui retourne l'ID du project ou de l'issue
@@ -562,7 +569,6 @@ function gestion_contenue_vue(method){
 			element5 = document.getElementById("Bissue");
 			element5.className="retour btn btn-default btn-primary";
 
-
 		}
 
 		if (method=='project'){
@@ -599,9 +605,44 @@ function gestion_contenue_vue(method){
 
 };
 
+$('form').on('submit', function() {
+  // call functions to handle form
+  return false;
+});
+
+
+
+function update_issue(){
+
+	console.log(id_projet_mem);
+	console.log(id_issue_mem);
+	var Title = $("#Title").val();
+	
+	var description = $("#description_Edit").val();
+	var assignee = $("#user").val();
+	
+	var module = $("#module").val();
+	var version_issue = $("#version_detectee").val();
+	var version_resolue = $("#version_resolue").val();
+	var type = $("#type").val();	
+	postActionData = '{"Title":' + Title + ',"description":"'+ description + '","assignee":' + assignee + ',"module":{"id":'+ module + ',},"version_issue":"#vi ' + version_issue + '","version_resolue":"#vr ' + version_resolue+ '","type":"'+type+'",}';
+	console.log(postActionData);
+	/*
+	$.ajax({
+		method: "PUT",
+ 		 url: "http://localhost/gitlab-interface/update.php?methode=issue&project_id="+project_id+"&issue_id="+issue_id,
+  		data: { name: "John"}
+	})
+  	.done(function( msg ) {
+    	alert( "Data Saved: " + msg );
+  	});*/
+	//return1();
+}
+
 //Gestion du bouton retour
 function return1(){
-
+	
+	console.log("return");
 	erase_DOM_part_and_edit("BTable");
 	loadTable(method_retour,id_retour);
 
