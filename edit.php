@@ -18,15 +18,8 @@
 
 				<datalist id="users">
 
-					<option>Chlore</option>
-
-					<option>PH</option>
-
-					<option>TAC</option>
-
-					<option>Chlore Choc</option>
-
-															
+					<!-- Le js rempli cette partie -->				
+										
 				</datalist>
 
 			</td>
@@ -38,14 +31,7 @@
 
 				<datalist id="modules">
 
-					<option>Chlore</option>
-
-					<option>PH</option>
-
-					<option>TAC</option>
-
-					<option>Chlore Choc</option>
-
+					<!-- Le js rempli cette partie -->	
 															
 				</datalist>
 

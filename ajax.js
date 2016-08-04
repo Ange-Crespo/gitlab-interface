@@ -416,13 +416,25 @@ function loadEdit(id_project,id_issue){
 		document.getElementById("Title").value=json.title;
 		document.getElementById("description_Edit").value=json.description;
 		document.getElementById("assignee").value=json.assignee.name;
+		
+		usersDOM=document.getElementById("users")
+		
+		ListSmth(usersDOM,id_project,"members");
+
+	
 		document.getElementById("module").value=json.milestone.title;
+
+		modulesDOM=document.getElementById("modules");
+			
+		ListSmth(modulesDOM,id_project,"modules");
+		
+		
 		document.getElementById("version_detectee").value=json.version_issue[0];
 		document.getElementById("version_resolue").value=json.version_resolved[0];
 		document.getElementById("module").value=json.milestone.title;
 		document.getElementById("module").value=json.milestone.title;
 		document.getElementById("type").value=equi_type(json.type2);
-
+		
  	});
 	
 }
@@ -438,6 +450,39 @@ function equi_type(type){
 
 	type=struc[type];
 	return type;
+
+}
+
+function ListSmth(partDOM,id_project,method){
+
+		var ask;
+
+	if (method=="members"){
+
+		ask="name";		
+	
+	}
+
+	else if (method=="modules"){
+		
+		ask="title";
+
+	}
+
+	url_json='http://localhost/gitlab-interface/dibi_connect.php?method='+method+'&project_id='+id_project;
+	
+	$.getJSON( url_json, function( json ) {
+	
+		for (var i=0; i<json.size; i++){
+			
+			option=document.createElement("option");
+			option.id=json.list[i].id;
+			option.innerHTML=json.list[i][ask];
+			partDOM.appendChild(option);
+
+		}
+	
+	});
 
 }
 

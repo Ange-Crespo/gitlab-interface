@@ -40,6 +40,7 @@ function return_Token(){
 }
 	
 	$token=return_Token();
+	//var_dump($token);
 	//echo $token;
 //////////////////////////// EXAMPLE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 /*$params = array(
@@ -86,7 +87,7 @@ function Get_something($specific_link,$token){
 	);
 	$result = curl_exec($ch);
 	
-	//var_dump($result);
+	//var_dump($url1);
 	return $result;
 }
 
@@ -124,7 +125,7 @@ function Get_Project_List($token){
 function Get_Project_Specific($token,$id){
 
 	$url1 = '/projects/'.$id.'/issues?';
-	 $result=Get_something($url1,$token);
+	$result=Get_something($url1,$token);
 	return $result;
 }
 
@@ -139,6 +140,22 @@ function Get_notes($token,$id_project,$id_issue){
 
 	$url="projects/".$id_project."/issues/".$id_issue."/notes?";
 	$result=Get_something($url,$token);
+	return $result;
+
+}
+
+function Get_members($token,$id_project){
+
+	$url1 = '/projects/'.$id_project.'/members?';
+	$result=Get_something($url1,$token);
+	return $result;
+
+}
+
+function Get_modules($token,$id_project){
+
+	$url1 = '/projects/'.$id_project.'/milestones?';
+	$result=Get_something($url1,$token);
 	return $result;
 
 }
@@ -185,6 +202,18 @@ function send_Ajax_Json($method,$token){
 		else if ($method=='notes'){
 
 			$result_not_parsed=Get_notes($token,$_REQUEST['project_id'],$_REQUEST['issue_id']);
+
+		}
+		
+		else if ($method=='members'){
+
+			$result_not_parsed=Get_members($token,$_REQUEST['project_id']);
+
+		}
+
+		else if ($method=='modules'){
+
+			$result_not_parsed=Get_modules($token,$_REQUEST['project_id']);
 
 		}
 
