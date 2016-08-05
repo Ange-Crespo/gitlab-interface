@@ -434,8 +434,8 @@ function loadEdit(id_project,id_issue){
 		document.getElementById("module").value=json.milestone.title;
 		document.getElementById("module").value=json.milestone.title;
 		
-		document.getElementById("type").value=equi_type(json.type2);
-		document.getElementById("type").innerHTML=json.type2;
+		document.getElementById("type").innerHTML=equi_type(json.type2);
+		document.getElementById("type").value=json.type2;
 		
  	});
 	
@@ -451,6 +451,7 @@ function equi_type(type){
 	};
 
 	type=struc[type];
+	console.log(type);
 	return type;
 
 }
@@ -625,17 +626,20 @@ function update_issue(){
 	var version_issue = $("#version_detectee").val();
 	var version_resolue = $("#version_resolue").val();
 	var type = $("#type").val();	
-	postActionData = '{"Title":' + Title + ',"description":"'+ description + '","assignee":' + assignee + ',"module":{"id":'+ module + ',},"version_issue":"#vi ' + version_issue + '","version_resolue":"#vr ' + version_resolue+ '","type":"'+type+'",}';
+	//"project_id":'+id_projet_mem+',"id":'+id_issue_mem+',
+	postActionData = '{"title":"' + Title + '","description":"'+ description + '","assignee_id":' + assignee + ',"milestone_id":'+ module + ',"labels":"#vi ' + version_issue + ',#vr ' + version_resolue+ ',#t '+type+'"}';
 	console.log(postActionData);
-	/*
+	
 	$.ajax({
-		method: "PUT",
- 		 url: "http://localhost/gitlab-interface/update.php?methode=issue&project_id="+project_id+"&issue_id="+issue_id,
-  		data: { name: "John"}
+		method: "POST",
+ 		 url: "http://localhost/gitlab-interface/update.php?methode=issue&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
+  		data: postActionData
 	})
   	.done(function( msg ) {
-    	alert( "Data Saved: " + msg );
-  	});*/
+    	alert( "L'issue à été mise à jour: " + msg );
+	
+  	});
+	
 	//return1();
 }
 
