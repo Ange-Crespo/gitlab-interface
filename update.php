@@ -37,23 +37,11 @@ session_start();
 //////////////////////// END EXAMPLE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 function update_issue($token){
-
-	//if (isset($_POST)){
-			
-	/*$assignee=array("id"=>11);	
-	$params=array(
-			
-			"title" => "Test12",
-			"description" => 'caca',
-			"assignee" =>$assignee
-	);*/
-		$params=$_POST;
-		//var_dump($params);
+		
 		$url2 = 'http://127.0.0.1:8080/api/v3/projects/'.$_REQUEST['project_id'].'/issues/'.$_REQUEST['issue_id'].'?private_token='.$token;
-		//var_dump(json_decode(file_get_contents("php://input")));
-		//$data_string = json_encode($params);
-		//$data_string={"title":"Test1","description":"caca666","assignee_id":1,"milestone_id":9,"labels":"#t test,#a autre, caca"};
-		var_dump($data_string);	    
+		$data_string = file_get_contents("php://input");
+		
+			    
 		$ch = curl_init($url2);
 
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -68,7 +56,7 @@ function update_issue($token){
 
 		$result = curl_exec($ch);
 		return $result;
-	//}
+
 }
 
 echo update_issue($token);

@@ -68,7 +68,7 @@
 											
 			<tr>
 				<td colspan="2" style="text-align: center;">
-				<input type="submit" onclick="update_issue()" value="Editer"/></td>
+				<input type="submit" onclick="editer()" value="Editer"/></td>
 			</tr>
 
 		</table>
