@@ -77,12 +77,12 @@ function loadTable(method,id) {
 		fields.field6.visible=true;		
 
 		fields.field7.locate= "milestone.title" ;
-		fields.field7.namee= "Version" ; 
+		fields.field7.namee= "Module" ; 
 		fields.field7.visible=true;
 
-		fields.field8.locate= "milestone.title" ;
-		fields.field8.namee= "Module" ; 
-		fields.field8.visible=true;
+		//fields.field8.locate= "milestone.title" ;
+		//fields.field8.namee= "Module" ; 
+		fields.field8.visible=false;
 
 		
 		
@@ -220,13 +220,11 @@ function loadIssue(method,id_project,id_issue) {
 		disp_button(json);
 		disp_title(json);
 		disp_description(json);
-		disp_commentaires(json);
 
  	});
 
 	$.getJSON( url_json_notes, function( json_notes ) {//on a le json du projet
 				
-		
 		disp_commentaires(json_notes);
 
  	}); 
@@ -326,10 +324,14 @@ function disp_commentaires(json){
 	var j=1;
 	var Cvide=true;
 	var coms=json.list;
+	console.log("la liste des commentaires :");
 	console.log(coms);
 	var Table=document.getElementById('Com-body');
-	for (var i = 0, c = coms.length; i < c; i++){
 	
+	for (var i = 0, c = coms.length; i < c; i++){
+		
+		
+		console.log(coms[i].author.name);
 		if (coms[i].author.name!=""){// mettre ici une condition sur le contenu du message pour éviter les texte avec un formatge propre à gitlab
 			tr=document.createElement('tr');
 			j=j+1;
@@ -362,40 +364,38 @@ function disp_commentaires(json){
 			Cvide=false;
 		}
 		
-		if (Cvide){
-			tr=document.createElement('tr');
-			j=j+1;
-			tr.id="Commentaire-"+j;
-			
-			td=document.createElement('td');
-
-			h4=document.createElement('h4');
-			h4.className="Titre_issue";
-
-			h5=document.createElement('h5');
-			h5.className="Titre_issue";
-
-			p=document.createElement('p');
-		
-			console.log(coms[i]);
-			p.innerHTML="Il n'y a pas encore de commentaire";
-			h4.innerHTML="Soyez le premier à commenter";
-			h5.innerHTML="(maintenant)";
-
-			// On met tout ensemble
-
-			td.appendChild(h4);
-			td.appendChild(h5);
-			td.appendChild(p);
-
-			tr.appendChild(td);
-
-			Table.appendChild(tr);
-			Cvide=false;
-			
-		}
 	}
+	if (Cvide){
+		tr=document.createElement('tr');
+		j=j+1;
+		tr.id="Commentaire-"+j;
+		td=document.createElement('td');
 
+		h4=document.createElement('h4');
+		h4.className="Titre_issue";
+
+		h5=document.createElement('h5');
+		h5.className="Titre_issue";
+
+		p=document.createElement('p');
+		
+		console.log(coms[i]);
+		p.innerHTML="Il n'y a pas encore de commentaire";
+		h4.innerHTML="Soyez le premier à commenter";
+		h5.innerHTML="&nbsp(&nbspmaintenant&nbsp)";
+
+		// On met tout ensemble
+
+		td.appendChild(h4);
+		td.appendChild(h5);
+		td.appendChild(p);
+
+		tr.appendChild(td);
+
+		Table.appendChild(tr);
+		Cvide=false;		
+
+	}
 }
 
 function loadEdit(id_project,id_issue){
@@ -422,8 +422,12 @@ function loadEdit(id_project,id_issue){
 			document.getElementById("description_Edit").value=json.description;
 		
 		
-
-			selected=json.assignee.name;
+			try {
+	    			selected=json.assignee.name;
+			}
+			catch(err) {
+    				console.log(err.message);
+			}
 
 		}
 
@@ -649,34 +653,32 @@ function editer(){
 	var version_issue = $("#version_detectee").val();
 	var version_resolue = $("#version_resolue").val();
 	var type = $("#type").val();	
-	//"project_id":'+id_projet_mem+',"id":'+id_issue_mem+',
-	//postActionData = '{"title":"' + Title + '","description":"'+ description + '","assignee_id":' + assignee + ',"milestone_id":'+ module + ',"labels":"#vi ' + version_issue + ',#vr ' + version_resolue+ ',#t '+type+'"}';
-	str_label= "#vi " + version_issue + ",#vr " + version_resolue+ ",#t "+ type;
-	json_obj={"title":Title, "description": description, "assignee_id": assignee, "milestone_id" : module, "labels" : str_label};
-	//console.log(postActionData);
-	//postActionData=JSON.parse(postActionData);
+	
+	var str_label= "#vi " + version_issue + ",#vr " + version_resolue+ ",#t "+ type;
+	var json_obj={"title":Title, "description": description, "assignee_id": assignee, "milestone_id" : module, "labels" : str_label};
+	
 	console.log(json_obj);
-	//console.log(JSON.stringify(json_obj));
+
 
 
 	if(is_new){
 
-		create_issue();
+		create_issue(json_obj);
 		is_new=false;
 	}
 
 	else{
 
-		update_issue();
+		update_issue(json_obj);
 
 	}
 
 
+	return1();
 	
-	console.log(is_new);
 }
 
-function create_issue(){
+function create_issue(json_obj){
 
 	$.ajax({
 		method: "POST",
@@ -687,7 +689,7 @@ function create_issue(){
    		//dataType: 'json',
     		
 		success: function(msg) {
-        		alert(JSON.stringify(msg));
+        		//alert(JSON.stringify(msg));
 			console.log(JSON.stringify(msg));
    		 }
 		
@@ -697,28 +699,114 @@ function create_issue(){
 
 }
 
-function update_issue(){
+function update_issue(json_obj){
 
 	
 
 	
 	$.ajax({
 		method: "POST",
-		url: "http://localhost/gitlab-interface/update.php?methode=issue&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
+		url: "http://localhost/gitlab-interface/update.php?methode=uptissue&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
 		processData: false,
  		data: JSON.stringify(json_obj),
 		//contentType: 'application/json; charset=utf-8',
    		//dataType: 'json',
     		
 		success: function(msg) {
-        		alert(JSON.stringify(msg));
+        		//alert(JSON.stringify(msg));
 			console.log(JSON.stringify(msg));
    		 }
 		
 	})
   	
 	
-	return1();
+	
+}
+
+function change_state(state){
+
+	//attention : on va chercher les infos dans le front 
+
+	var type=document.getElementById("type").innerHTML;
+	var version_correct=document.getElementById("version_correct").innerHTML;
+	var version_detect=document.getElementById("version_detect").innerHTML;
+
+	var str_label = "#vi " + version_detect + ",#vr " + version_correct + ",#t " + type + ",#s " + state;
+	if (state=="resolved" || state=="closed" || state=="paid" || state=="delivered" || state=="wont" || state=="invalid"){
+
+		status="close";
+	
+	}
+
+	else{
+
+		status="reopen";	
+
+	}
+	var json_obj={"labels" : str_label, "state_event" : status};
+	var button=document.getElementById("state");
+	button.innerHTML=equi_state(state);
+	button.className="btn dropdown-toggle btn-state-"+state;
+	
+	update_issue(json_obj);
+	
+}
+
+function change_type(type){
+
+	var state=document.getElementById("state").innerHTML;
+	var version_correct=document.getElementById("version_correct").innerHTML;
+	var version_detect=document.getElementById("version_detect").innerHTML;
+
+	var str_label = "#vi " + version_detect + ",#vr " + version_correct + ",#t " + type + ",#s " + state;
+	
+	var json_obj={"labels" : str_label};
+	var button=document.getElementById("type");
+	button.innerHTML=equi_type(type);
+	button.className="btn dropdown-toggle btn-"+type;
+	
+	update_issue(json_obj);
+
+}
+
+function post_message(){
+
+	var message =  $("#mon_message").val();
+
+	var json_obj = {"body" : message}; 
+
+	$.ajax({
+		method: "POST",
+		url: "http://localhost/gitlab-interface/update.php?methode=postmessage&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
+		processData: false,
+ 		data: JSON.stringify(json_obj),
+		//contentType: 'application/json; charset=utf-8',
+   		//dataType: 'json',
+    		
+		success: function(msg) {
+        		//alert(JSON.stringify(msg));
+			console.log(JSON.stringify(msg));
+   		 }
+	});
+	var url_json_notes='http://localhost/gitlab-interface/get.php?method=notes&project_id='+id_projet_mem+'&issue_id='+id_issue_mem;
+	$.getJSON( url_json_notes, function( json_notes ) {//on a le json du projet
+				
+		disp_commentaires(json_notes);
+
+ 	}); 
+	
+}
+
+function delete_message(){
+
+	
+
+}
+
+function update_message(){
+
+	
+
 }
 
 //Gestion du bouton retour

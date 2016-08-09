@@ -2,7 +2,7 @@
 
 include "dibi_connect.php";
 session_start();
-/////////////////////////////////////////////////////////////////////////////PARTIE PUT/UPDATE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+///////////////////////////////////////////////////////////////////////////// PARTIE PUT/UPDATE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 //////////////////////////// EXAMPLE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 /*$params = array(
@@ -59,6 +59,86 @@ function update_issue($token){
 
 }
 
-echo update_issue($token);
+function update_state($token){
+
+	
+	return update_issue($token);
+
+}
+
+function update_type($token){
+
+	return $result;
+
+}
+
+function update_message($token){
+
+	return $result;
+
+}
+
+function rm_message($token){
+
+	return $result;
+
+}
+
+function post_message($token){
+
+		$url2 = 'http://127.0.0.1:8080/api/v3/projects/'.$_REQUEST['project_id'].'/issues/'.$_REQUEST['issue_id'].'/notes?private_token='.$token;
+		$data_string = file_get_contents("php://input");
+		
+			    
+		$ch = curl_init($url2);
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($data_string)
+		)
+			);
+
+		$result = curl_exec($ch);
+
+		return $result;
+
+}
+
+function select_method($token){
+
+	if ($_REQUEST['methode']=="uptmessage"){
+
+		return update_message($token);
+
+	}
+
+
+	else if ($_REQUEST['methode']=="rmmessage"){
+
+		return rm_message($token);
+
+	}
+
+	else if ($_REQUEST['methode']=="postmessage"){
+
+		return post_message($token);
+
+	}
+		
+	else if ($_REQUEST['methode']=="uptissue"){
+
+		return update_issue($token);
+
+	}
+
+
+}
+
+echo select_method($token);
+
 
 ?>

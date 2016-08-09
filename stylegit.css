@@ -717,6 +717,47 @@ a:active{
 
 }
 
+.btn-amelioration{
+
+	
+	background-color : #0066cc;
+	margin-bottom : 10%;
+	color : white;
+	font-weight : bold;
+	*background-color: #0066cc;
+	background-image: -ms-linear-gradient(top, #0066cc, #80bfff);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0066cc), to(#80bfff));
+	background-image: -webkit-linear-gradient(top, #0066cc, #80bfff);
+	background-image: -o-linear-gradient(top, #0066cc, #80bfff);
+	background-image: -moz-linear-gradient(top,#0066cc, #80bfff);
+	background-image: linear-gradient(top, #0066cc, #80bfff);
+	background-repeat: repeat-x;
+	border-color: #000000 #000000 #000000;
+	border : thin solid #000000;
+	
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#0066cc', endColorstr='#80bfff', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+	
+}
+.btn-amelioration:hover{
+
+	color : white;
+
+}
+
+.btn-amelioration:focus{
+
+	color : white;
+
+}
+
+.btn-amelioration:active {
+
+  	color:white;
+  	background-color: #80bfff;	
+
+}
+
 /*/////////////////////////////////////////// Style BOUTON /////////////////////////////////*/
 
 

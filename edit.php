@@ -47,6 +47,7 @@
 		
 				<td>Version résolue</td>
 				<td><input type="text" maxlength="15" id="version_resolue"></td>
+			
 			</tr>
 	
 			<tr>

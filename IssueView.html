@@ -8,11 +8,14 @@
 
 	 	<ul class="dropdown-menu">
 
-    			<li><a href="#">Open</a></li>
-			<li><a href="#">Paid</a></li>
-			<li><a href="#">Delivery</a></li>
-    			<li><a href="#">Invalid</a></li>
-			<li><a href="#">Won't fix</a></li>
+    			<li><a onclick="change_state('opened')">Open</a></li>
+			<li><a onclick="change_state('reopened')">Reopened</a></li>
+			<li><a onclick="change_state('resolved')">Resolved</a></li>
+    			<li><a onclick="change_state('closed')">Closed</a></li>
+			<li><a onclick="change_state('paid')">Paid</a></li>
+			<li><a onclick="change_state('delivered')">Delivery</a></li>
+			<li><a onclick="change_state('wont')">Won't fix</a></li>
+			<li><a onclick="change_state('invalid')">Invalid</a></li>
     			
 
   		</ul>
@@ -39,8 +42,8 @@
 		<button id="type" class="btn btn-bug dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bug/issue</button> 
 		<ul class="dropdown-menu">
 
-			<li><a href="#">Bug/issue</a></li>
-			<li><a href="#">Amélioration</a></li>
+			<li><a onclick="change_type('bug')">Bug/issue</a></li>
+			<li><a onclick="change_type('amelioration')">Amélioration</a></li>
 		
  		</ul>
 	</div>
@@ -72,7 +75,7 @@
 
 		</div>
 
-		<button class="btn" style="float:right">Poster</button>
+		<button class="btn" style="float:right" onclick="post_message()">Poster</button>
 	</div>
 
 <div>

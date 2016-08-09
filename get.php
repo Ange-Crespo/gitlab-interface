@@ -120,7 +120,6 @@ function send_Ajax_Json($method,$token){
 
 		$result_php_Array = json_decode($result_not_parsed,true);
 		$result_php_Array=Update_all_Date($result_php_Array); // on passe du format d'horaire avec offset sur les zones internationnale à un format user friendly
-
 		$add=["size"=>count($result_php_Array)];
 		$result_php_Array=$add+["list"=>$result_php_Array];
 		

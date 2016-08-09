@@ -56,7 +56,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 					
 				 </div>  
 		 				
-				 <h4 class="headerwords"> <img src="images/picodev.png"  height= '40 ' width= '32 ' class="imgheader pull-left"><span class="perso">Votre interface de déclaration de bugs et d'améliorations</span></h4>  
+				 <h4 class="headerwords"> <img src="images/picodev.png"  height= '40 ' width= '32 ' class="imgheader pull-left"><span class="perso">Vérification des tokens</span></h4>  
 			
 				
 				 </div>  
@@ -76,9 +76,6 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 				 </div>  
 				
 				 <div class="headPanel">  
-
-					<button id="Bretour" style="display : 'none'" class=" retour btn btn-default " onclick="return1()"><span class="glyphicon glyphicon-arrow-left"></span><a id="Cretour" style="text-decoration: none"> Retour</a></button>
-					<button id="Bissue" href="#" class=" retour btn btn-default btn-info" onclick="New();loadEdit(id_projet_mem,0)"><span class="glyphicon glyphicon-plus"></span> Ajouter une issue</button>
 				
 				 </div>  
 				
@@ -138,7 +135,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	<script src="bower_components/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 		
-	<script src="ajax.js"></script>  
+	
 	 </body>  
 	
  </html>  
