@@ -42,7 +42,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>  
  <![endif]-->  
  </head>  
-	 <body onload="return loadTable('projects',0)">  
+	 <body>  
 	
 	  <div>  
 	
@@ -106,8 +106,48 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	
 	 							 </div>  
 								<div id="BTable">								
-									<table id="Table">
-									
+									<table id="table" data-toggle="table">
+    										
+										<!--<thead>
+        
+											<tr>
+            
+												<th>Name</th>
+
+            											<th>Token</th>
+
+            											<th>Status</th>
+												
+												<th>Reset Token</th>
+        										</tr>
+
+										</thead>
+
+										<tbody>
+
+											<tr>
+
+												<td>1</td>
+
+            											<td>Item 1</td>
+
+            											<td>$1</td>
+								
+												
+       											</tr>
+
+        										<tr>
+
+            											<td>2</td>
+
+           											<td>Item 2</td>
+
+           											<td>$2</td>
+
+        										</tr>
+
+    										</tbody>-->
+
 									</table>
 								</div>							 
 							</div>  
@@ -135,7 +175,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	<script src="bower_components/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 		
-	
+	<script src="checktoken.js"></script>  
 	 </body>  
 	
  </html>  

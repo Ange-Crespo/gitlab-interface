@@ -90,7 +90,7 @@ function loadTable(method,id) {
 
 	console.log(url_json);
 
-	//utilisation de bootstrap table pour chager les tableaux
+	//utilisation de bootstrap table pour changer les tableaux
 	$('#Table').bootstrapTable(
 					{ 
 						url : url_json,
