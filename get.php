@@ -6,7 +6,7 @@ session_start();
 //var_dump($token);
 function Get_something($specific_link,$token){
 
-	$url1='http://127.0.0.1:8080/api/v3/'.$specific_link.'&private_token='.$token;
+	$url1='http://46.105.102.134:8081/api/v3/'.$specific_link.'&private_token='.$token;
 	$ch = curl_init($url1);
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

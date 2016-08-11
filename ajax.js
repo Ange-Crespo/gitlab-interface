@@ -17,7 +17,7 @@ function loadTable(method,id) {
 
 	if (method=='projects'){
 
-		url_json='http://localhost/gitlab-interface/get.php?method=projects';
+		url_json='http://46.105.102.134/gitlab-interface/get.php?method=projects';
 		
 		fields.field1.locate= "id" ;
 		fields.field1.namee= "Project ID" ; 
@@ -48,7 +48,7 @@ function loadTable(method,id) {
 	
 	if (method=='project'){
 		
-		url_json='http://localhost/gitlab-interface/get.php?method=project&project_id='+id;
+		url_json='http://46.105.102.134/gitlab-interface/get.php?method=project&project_id='+id;
 		
 		id_projet_mem=id;
 
@@ -210,8 +210,8 @@ function loadIssue(method,id_project,id_issue) {
 	});
 
 	gestion_contenue_vue(method);
-	var url_json='http://localhost/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
-	var url_json_notes='http://localhost/gitlab-interface/get.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json='http://46.105.102.134/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json_notes='http://46.105.102.134/gitlab-interface/get.php?method=notes&project_id='+id_project+'&issue_id='+id_issue;
 	id_issue_mem=id_issue;
 	console.log(url_json);
 	console.log(url_json_notes);
@@ -410,7 +410,7 @@ function loadEdit(id_project,id_issue){
  		}
 	});
 
-	var url_json='http://localhost/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
+	var url_json='http://46.105.102.134/gitlab-interface/get.php?method=issue&project_id='+id_project+'&issue_id='+id_issue;
 
 	$.getJSON( url_json, function( json ) {//on a le json de l'issue
 		
@@ -492,7 +492,7 @@ function ListSmth(partDOM,id_project,method,selected){
 
 	}
 
-	url_json='http://localhost/gitlab-interface/get.php?method='+method+'&project_id='+id_project;
+	url_json='http://46.105.102.134/gitlab-interface/get.php?method='+method+'&project_id='+id_project;
 	
 	$.getJSON( url_json, function( json ) {
 	
@@ -682,7 +682,7 @@ function create_issue(json_obj){
 
 	$.ajax({
 		method: "POST",
-		url: "http://localhost/gitlab-interface/newIssue.php?methode=issue&project_id="+id_projet_mem,
+		url: "http://46.105.102.134/gitlab-interface/newIssue.php?methode=issue&project_id="+id_projet_mem,
 		processData: false,
  		data: JSON.stringify(json_obj),
 		//contentType: 'application/json; charset=utf-8',
@@ -706,7 +706,7 @@ function update_issue(json_obj){
 	
 	$.ajax({
 		method: "POST",
-		url: "http://localhost/gitlab-interface/update.php?methode=uptissue&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
+		url: "http://46.105.102.134/gitlab-interface/update.php?methode=uptissue&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
 		processData: false,
  		data: JSON.stringify(json_obj),
 		//contentType: 'application/json; charset=utf-8',
@@ -777,7 +777,7 @@ function post_message(){
 
 	$.ajax({
 		method: "POST",
-		url: "http://localhost/gitlab-interface/update.php?methode=postmessage&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
+		url: "http://46.105.102.134/gitlab-interface/update.php?methode=postmessage&project_id="+id_projet_mem+"&issue_id="+id_issue_mem,
 		processData: false,
  		data: JSON.stringify(json_obj),
 		//contentType: 'application/json; charset=utf-8',
@@ -788,7 +788,7 @@ function post_message(){
 			console.log(JSON.stringify(msg));
    		 }
 	});
-	var url_json_notes='http://localhost/gitlab-interface/get.php?method=notes&project_id='+id_projet_mem+'&issue_id='+id_issue_mem;
+	var url_json_notes='http://46.105.102.134/gitlab-interface/get.php?method=notes&project_id='+id_projet_mem+'&issue_id='+id_issue_mem;
 	$.getJSON( url_json_notes, function( json_notes ) {//on a le json du projet
 				
 		disp_commentaires(json_notes);

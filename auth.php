@@ -20,7 +20,7 @@ if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
 	echo "<script>  
 
 	function reset_All(){
-		window.location='http://localhost/gitlab-interface/auth.php?reset=true';
+		window.location='http://46.105.102.134/gitlab-interface/auth.php?reset=true';
 	}
 
 	function setCookie(cname, cvalue, exdays) 
@@ -54,14 +54,14 @@ if ($_SESSION['cookie_set']==false || $_SESSION['cookie_set']==null)
                 
             }
         };	
-	window.location='http://localhost/gitlab-interface/index.php';
+	window.location='http://46.105.102.134/gitlab-interface/index.php';
 	 </script>";	
 //var_dump($_SESSION['login']);
 }
 
 else {
 
-	echo "<script> window.location='http://localhost/gitlab-interface/index.php';  </script>";
+	echo "<script> window.location='http://46.105.102.134/gitlab-interface/index.php';  </script>";
 
 }
 

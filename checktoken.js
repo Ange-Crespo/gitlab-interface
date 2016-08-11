@@ -1,5 +1,5 @@
 
-	var url_json='http://localhost/gitlab-interface/checkToken.php?method=listcheck';
+	var url_json='http://46.105.102.134/gitlab-interface/checkToken.php?method=listcheck';
 	var $table = $('#table');
         $remove = $('#remove');
 
@@ -112,7 +112,7 @@
 
 	function operateFormatter(value, row, index) {
         	return [
-            		'<a class="modify" href="http://localhost:8080/" target="_blank" title="Like">',
+            		'<a class="modify" href="http://46.105.102.134:8081/" target="_blank" title="Like">',
             			'<i class="glyphicon glyphicon-wrench"></i>',
             		'</a>  ',
             		
@@ -151,7 +151,7 @@ function post_token(value,id){
 
 	$.ajax({
 		method: "POST",
-		url: "http://localhost/gitlab-interface/postToken.php?method=token&value="+value+"&id="+id,
+		url: "http://46.105.102.13446.105.102.134/gitlab-interface/postToken.php?method=token&value="+value+"&id="+id,
 		processData: false,
  		
 		//contentType: 'application/json; charset=utf-8',

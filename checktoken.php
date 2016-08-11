@@ -90,7 +90,7 @@ if ($_COOKIE['name']!=$_SESSION['private_key'] || $_COOKIE['name']==null )
 	 						 <li class=""> <a class="Pane1" href="http://localhost/gitlab-interface/index.php"> <span class="glyphicon glyphicon-folder-close"></span> Mes Projets </a> </li>  
 	
 	 						 <!--<li> <a href="#"> <span class="glyphicon glyphicon-book"></span> Amélioration</a> </li>  -->
-							<li><a class="btn btn-inverse" style="color : white;" href='http://127.0.0.1/pydio'>Retour pour l'échange de fichier</a></li>
+							<li><a class="btn btn-inverse" style="color : white;" href='http://46.105.102.134/pydio'>Retour pour l'échange de fichier</a></li>
 	 		
 	
 	 					 </ul>  

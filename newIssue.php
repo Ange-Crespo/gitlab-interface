@@ -6,7 +6,7 @@ session_start();
 
 function create_issue($token){
 		
-		$url2 = 'http://127.0.0.1:8080/api/v3/projects/'.$_REQUEST['project_id'].'/issues?private_token='.$token;
+		$url2 = 'http://46.105.102.134:8081/api/v3/projects/'.$_REQUEST['project_id'].'/issues?private_token='.$token;
 		$data_string = file_get_contents("php://input");
 			    
 		$ch = curl_init($url2);

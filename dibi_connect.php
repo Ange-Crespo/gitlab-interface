@@ -8,9 +8,9 @@ function return_Token(){
 	try {
 		dibi::connect([
 			'driver' => 'mysqli',
-			'host' => 'localhost',
+			'host' => '46.105.102.134',
 			'username' => 'pydiouser',
-			'password' => '123',
+			'password' => 'pydiopassword',
 			'database' => 'pydiodb',
 			'options' => [
 				MYSQLI_OPT_CONNECT_TIMEOUT => 30,

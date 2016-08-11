@@ -10,9 +10,9 @@ function postToken($token,$id){
 		
 		dibi::connect([
 			'driver' => 'mysqli',
-			'host' => 'localhost',
+			'host' => '46.105.102.134',
 			'username' => 'pydiouser',
-			'password' => '123',  // pydiopassword on the server
+			'password' => 'pydiopassword',  // pydiopassword on the server
 			'database' => 'pydiodb',
 			'options' => [
 				MYSQLI_OPT_CONNECT_TIMEOUT => 30,
