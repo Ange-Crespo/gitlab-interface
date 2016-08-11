@@ -289,6 +289,35 @@ function equi_state(state){
 
 }
 
+function inverse_state(state){
+
+	var struc={
+
+    			Open : 'opened',
+			Reopen : 'reopened',
+			Resolved : 'resolved',
+    			Close : 'closed',
+			Paid : 'paid',
+			Delivered : 'delivered',
+			Invalid :'invalid ',
+			
+	};
+	
+	if (state=="Won't fix"){
+		
+		state="wont";	
+	
+	}
+	
+	else{
+
+	state=struc[state];
+
+	}
+
+	return state;
+
+}
 function disp_title(json){
 
 	var Titre_issue=json.title;
@@ -755,12 +784,15 @@ function change_state(state){
 function change_type(type){
 
 	var state=document.getElementById("state").innerHTML;
+	state=inverse_state(state);	
+	console.log(state);
 	var version_correct=document.getElementById("version_correct").innerHTML;
 	var version_detect=document.getElementById("version_detect").innerHTML;
 
 	var str_label = "#vi " + version_detect + ",#vr " + version_correct + ",#t " + type + ",#s " + state;
 	
 	var json_obj={"labels" : str_label};
+	console.log(json_obj);
 	var button=document.getElementById("type");
 	button.innerHTML=equi_type(type);
 	button.className="btn dropdown-toggle btn-"+type;

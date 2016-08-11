@@ -66,11 +66,6 @@ function update_state($token){
 
 }
 
-function update_type($token){
-
-	return $result;
-
-}
 
 function update_message($token){
 
