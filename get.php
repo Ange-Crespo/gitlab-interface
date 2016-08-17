@@ -16,7 +16,7 @@ function Get_something($specific_link,$token){
 			)
 	);
 	$result = curl_exec($ch);
-	
+	curl_close($ch);
 	//var_dump($url1);
 	return $result;
 }
@@ -30,7 +30,7 @@ function Get_Project_List($token){
 
 function Get_Project_Specific($token,$id){
 
-	$url1 = '/projects/'.$id.'/issues?';
+	$url1 = 'projects/'.$id.'/issues?';
 	$result=Get_something($url1,$token);
 	return $result;
 }
@@ -130,8 +130,12 @@ function send_Ajax_Json($method,$token){
 	return $result_json;
 }
 
+try{
+   echo send_Ajax_Json($_REQUEST['method'],$token); // C'est la ligne de retour !!!!
+} catch(Exception $e){
+    print_r($e);
+}
 
-echo send_Ajax_Json($_REQUEST['method'],$token); // C'est la ligne de retour !!!!
 
 function AffDate($date){
  	if(!ctype_digit($date))
