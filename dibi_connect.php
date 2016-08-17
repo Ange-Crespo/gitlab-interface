@@ -9,6 +9,7 @@ function return_Token(){
 		dibi::connect([
 			'driver' => 'mysqli',
 			'host' => '46.105.102.134',
+			'port' => '3306',
 			'username' => 'pydiouser',
 			'password' => 'pydiopassword',
 			'database' => 'pydiodb',
