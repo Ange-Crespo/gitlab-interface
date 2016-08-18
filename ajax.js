@@ -270,6 +270,8 @@ function disp_button(json){
 	var state = json.state2;
 	var class_state = 'btn dropdown-toggle btn-state-'+state;
 	state=equi_state(state);
+	var type = json.type2;
+	var class_type='btn dropdown-toggle btn-'+type;
 	labels.forEach(function(label) {
 
     		console.log(label);
@@ -287,12 +289,15 @@ function disp_button(json){
 	var buttonVersion_issue=document.getElementById('version_detect');
 	var buttonVersion_resolved=document.getElementById('version_correct');
 	var buttonState=document.getElementById('state');
+	var buttonType=document.getElementById('type');
 
 	buttonModule.innerHTML=Module;
 	buttonVersion_issue.innerHTML=version_issue;
 	buttonVersion_resolved.innerHTML=version_resolved;
 	buttonState.innerHTML=state;
 	buttonState.className=class_state;
+	buttonType.innerHTML=equi_type(type);
+	buttonType.className = class_type;
 	
 	console.log(buttonModule);
 	console.log(buttonVersion_issue);
