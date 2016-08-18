@@ -26,10 +26,11 @@ function Get_something($specific_link,$token){
 function return_users(){
 	try {
 		dibi::connect([
-			'driver' => 'mysqli',
+			'driver' => 'mysql',
 			'host' => 'localhost',
+			'port' => '3306',
 			'username' => 'pydiouser',
-			'password' => '123',  // pydiopassword on the server
+			'password' => 'pydiopassword',  // pydiopassword on the server
 			'database' => 'pydiodb',
 			'options' => [
 				MYSQLI_OPT_CONNECT_TIMEOUT => 30,
