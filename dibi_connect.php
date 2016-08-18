@@ -7,7 +7,7 @@ session_start();
 function return_Token(){
 	try {
 		dibi::connect([
-			'driver' => 'mysqli',
+			'driver' => 'mysql',
 			'host' => 'localhost',
 			'username' => 'pydiouser',
 			'password' => '123',

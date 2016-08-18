@@ -16,7 +16,7 @@ function Get_something($specific_link,$token){
 			)
 	);
 	$result = curl_exec($ch);
-	
+	curl_close($ch);
 	//var_dump($url1);
 	return $result;
 }
@@ -30,7 +30,7 @@ function Get_Project_List($token){
 
 function Get_Project_Specific($token,$id){
 
-	$url1 = '/projects/'.$id.'/issues?';
+	$url1 = 'projects/'.$id.'/issues?';
 	$result=Get_something($url1,$token);
 	return $result;
 }
@@ -293,6 +293,16 @@ function Update_labels($Array){
 	return $Array;
 
 }
+
+function triage(){
+
+	
+	
+
+
+
+}
+
 
 function isVisible($Array){ //fonction à faire une de ces 4 pour rendre visible seulement les issue que l'on souhaite 
 

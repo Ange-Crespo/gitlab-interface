@@ -120,6 +120,7 @@ function loadTable(method,id) {
 						showExport : false,
 						showToggle : false,
 						showColumns : false,
+						showFilter:true,
 						sidePagination : 'server',
 						minimumCountColumns : 2,
 						responseHandler: (function responseHandler(res) {
@@ -137,7 +138,9 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
+							order : 'asc',
 							width: 10,
+							
 							
 						},{
 							field : fields.field2.locate,
@@ -146,6 +149,7 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
+							order : 'asc',
 							
 						},{
 							field : fields.field3.locate,
@@ -154,6 +158,7 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
+							order : 'asc',
 							dataField : "test",
 						
 						},{						
@@ -170,6 +175,7 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
+							order : 'asc',
 						
 						},{
 							field : fields.field6.locate,
@@ -178,6 +184,7 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
+							order : 'asc',
 						
 						},{
 							field : fields.field7.locate,
@@ -186,7 +193,7 @@ function loadTable(method,id) {
 							align : 'left',
 							valign : 'bottom',
 							sortable : true,
-						
+							order : 'asc',
 						},{
 							field : fields.field8.locate,
 							visible: fields.field8.visible,
@@ -198,6 +205,32 @@ function loadTable(method,id) {
 						} ] 
 					});
 };
+
+
+ var $table=$('#Table');
+
+
+setTimeout(function () {
+            $table.bootstrapTable('resetView');
+        }, 200);
+        $table.on('check.bs.table uncheck.bs.table ' +
+                'check-all.bs.table uncheck-all.bs.table', function () {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+            // save your data, here just save the current page
+            selections = getIdSelections();
+            // push or splice the selections if you want to save all data selections
+        });
+        $table.on('expand-row.bs.table', function (e, index, row, $detail) {
+            if (index % 2 == 1) {
+                $detail.html('Loading from ajax request...');
+                $.get('LICENSE', function (res) {
+                    $detail.html(res.replace(/\n/g, '<br>'));
+                });
+            }
+        });
+ $table.on('all.bs.table', function (e, name, args) {
+            console.log(name, args);
+        });
 
 // Fonction qui charge les information pour les issues et rempli la page issus avec les bons boutons, les commentaires etc
 function loadIssue(method,id_project,id_issue) {
@@ -237,6 +270,8 @@ function disp_button(json){
 	var state = json.state2;
 	var class_state = 'btn dropdown-toggle btn-state-'+state;
 	state=equi_state(state);
+	var type = json.type2;
+	class_type='btn dropdown-toggle btn-'+type;
 	labels.forEach(function(label) {
 
     		console.log(label);
@@ -254,13 +289,16 @@ function disp_button(json){
 	var buttonVersion_issue=document.getElementById('version_detect');
 	var buttonVersion_resolved=document.getElementById('version_correct');
 	var buttonState=document.getElementById('state');
+	var buttonType=document.getElementById('type');
 
 	buttonModule.innerHTML=Module;
 	buttonVersion_issue.innerHTML=version_issue;
 	buttonVersion_resolved.innerHTML=version_resolved;
 	buttonState.innerHTML=state;
 	buttonState.className=class_state;
-	
+	buttonType.innerHTML=equi_type(type);
+	buttonType.className = class_type;
+
 	console.log(buttonModule);
 	console.log(buttonVersion_issue);
 	console.log(buttonVersion_resolved);
@@ -474,15 +512,19 @@ function loadEdit(id_project,id_issue){
 		modulesDOM=document.getElementById("module");
 			
 		ListSmth(modulesDOM,id_project,"modules",selected2);
-		
+
+			console.log("LLLOLOLO");
+			console.log(json.type2);
 		if (id_issue!=0){
-			
+		
 			document.getElementById("version_detectee").value=json.version_issue[0];
 			document.getElementById("version_resolue").value=json.version_resolved[0];
 			document.getElementById("module").value=json.milestone.title;
 			document.getElementById("module").value=json.milestone.title;
 		
 			document.getElementById("type").innerHTML=equi_type(json.type2);
+			console.log("LLLOLOLO");
+			console.log(json.type2);
 			document.getElementById("type").value=json.type2;
 
 		}
@@ -596,7 +638,7 @@ function DOM_edit(element1){
 	var table = document.createElement('table');
 	table.id="Table";
 	element1.appendChild(table);
-
+	console.log(element1);
 };
 
 //fonction qui suprimme le contenu d'un élément du DOM et le remplasse par un table d'id Table
@@ -840,6 +882,8 @@ function update_message(){
 	
 
 }
+
+
 
 //Gestion du bouton retour
 function return1(){
